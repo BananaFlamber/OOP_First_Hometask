@@ -10,11 +10,16 @@ public class RobotMap {
     private final int maxRobotCount;
     private final List<Robot> robots;
 
-    public RobotMap(int n, int m){
+    public RobotMap(int n, int m) {
         this(n, m, 10);
     }
+
     public RobotMap(int n, int m, int maxRobotCount) {
-        // TODO: 13.01.2023 Реализовать проверку входных параметров.
+        try {
+            validateMapSize(n, m);
+        } catch (PointValidationException e) {
+            throw new RuntimeException(e);
+        }
         this.n = n;
         this.m = m;
         this.maxRobotCount = maxRobotCount;
@@ -25,6 +30,7 @@ public class RobotMap {
         final MapPoint robotPosition;
         try {
             validatePoint(point);
+            validateRobot((ArrayList) robots);
             robotPosition = new MapPoint(point.getX(), point.getY());
         } catch (PointValidationException e) {
             throw new RobotCreationException(e.getMessage());
@@ -33,6 +39,22 @@ public class RobotMap {
         Robot robot = new Robot(robotPosition);
         robots.add(robot);
         return robot;
+    }
+
+    private void validateMapSize(int n, int m) throws PointValidationException {
+        if (n <= 0 || m <= 0) {
+            throw new PointValidationException("Введены некоректные данные");
+        }
+    }
+
+    private void validateRobot(ArrayList robots) throws RobotCreationException {
+        validateCountsOfRobots(robots);
+    }
+
+    private void validateCountsOfRobots(ArrayList robots) throws RobotCreationException {
+        if (robots.size() >= maxRobotCount) {
+            throw new RobotCreationException("Превышен лимит роботов" + maxRobotCount);
+        }
     }
 
     private void validatePoint(Point point) throws PointValidationException {
@@ -60,9 +82,11 @@ public class RobotMap {
             this.point = point;
             this.direction = DEFAULT_DIRECTION;
         }
+
         public void move() throws RobotMoveException {
-            move (1);
+            move(1);
         }
+
         public void move(int x) throws RobotMoveException {
             final MapPoint newPoint;
             try {

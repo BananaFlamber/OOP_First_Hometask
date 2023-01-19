@@ -1,5 +1,7 @@
 package org.example.demo;
 
+import org.example.example.Point;
+
 public class SimpleRobot {
 
     // У каждого робота есть его позиция на двумерном поле (целочисленные координаты x и y)

@@ -1,5 +1,7 @@
 package org.example.demo;
 
+import org.example.example.Point;
+
 import java.util.ArrayList;
 import java.util.List;
 

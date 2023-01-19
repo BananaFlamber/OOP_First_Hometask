@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws RobotCreationException {
         // Есть двумерная карта с роботами
         // Роботы это объекты, они могут перемещаться по карте
         // Карта имеет какие-то границы
